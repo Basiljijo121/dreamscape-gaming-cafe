@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dreamscape Gaming Cafe – Coming Soon</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- Particles Background -->
+  <div class="particles" id="particles"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <span class="brand-icon">🎮</span>
+      <span class="brand-name">DREAMSCAPE</span>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#updates">Updates</a></li>
+      <li><a href="#equipment">Equipment</a></li>
+      <li><a href="#design">Design</a></li>
+      <li><a href="#games">Games</a></li>
+      <li><a href="#food">Food</a></li>
+      <li><a href="#community">Community</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-badge">🚀 Coming in 3–4 Months</div>
+      <h1 class="hero-title">
+        <span class="glitch" data-text="DREAMSCAPE">DREAMSCAPE</span>
+        <span class="hero-sub">GAMING CAFE</span>
+      </h1>
+      <p class="hero-desc">
+        We're building something epic. Join us in planning the ultimate gaming experience —
+        from battlestation setups to mouthwatering menus. Your ideas shape our world.
+      </p>
+      <div class="hero-buttons">
+        <a href="#community" class="btn btn-primary">Join the Discussion</a>
+        <a href="#updates" class="btn btn-outline">View Updates</a>
+      </div>
+      <div class="countdown-section">
+        <p class="countdown-label">Estimated Launch In</p>
+        <div class="countdown" id="countdown">
+          <div class="count-box"><span id="days">--</span><small>Days</small></div>
+          <div class="count-sep">:</div>
+          <div class="count-box"><span id="hours">--</span><small>Hours</small></div>
+          <div class="count-sep">:</div>
+          <div class="count-box"><span id="mins">--</span><small>Mins</small></div>
+          <div class="count-sep">:</div>
+          <div class="count-box"><span id="secs">--</span><small>Secs</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="monitor-wrap">
+        <div class="monitor">
+          <div class="monitor-screen">
+            <div class="screen-content">
+              <div class="screen-line">$ initializing dreamscape...</div>
+              <div class="screen-line typed" id="typedText"></div>
+              <div class="screen-cursor">█</div>
+            </div>
+          </div>
+          <div class="monitor-stand"></div>
+          <div class="monitor-base"></div>
+        </div>
+        <div class="glow-ring"></div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll to explore</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item"><span class="stat-num">3-4</span><span class="stat-label">Months Away</span></div>
+    <div class="stat-item"><span class="stat-num">∞</span><span class="stat-label">Ideas Welcome</span></div>
+    <div class="stat-item"><span class="stat-num">1</span><span class="stat-label">Big Dream</span></div>
+    <div class="stat-item"><span class="stat-num">24/7</span><span class="stat-label">Planning Mode</span></div>
+  </div>
+
+  <!-- UPDATES SECTION -->
+  <section class="section" id="updates">
+    <div class="section-header">
+      <span class="section-tag">📡 LIVE LOG</span>
+      <h2 class="section-title">Planning <span class="neon">Updates</span></h2>
+      <p class="section-desc">Follow along as we build Dreamscape from scratch. Every milestone, every decision, documented here.</p>
+    </div>
+    <div class="updates-grid">
+
+      <div class="update-card featured">
+        <div class="update-meta">
+          <span class="update-tag tag-milestone">🏁 Milestone</span>
+          <span class="update-date">Oct 21, 2026</span>
+        </div>
+        <h3>🚀 The Dream Begins!</h3>
+        <p>Today we officially started planning Dreamscape Gaming Cafe. The website is live! We're now gathering ideas from the community on equipment, design, games, and more. This is just the beginning — join the discussion and help us shape this cafe!</p>
+        <div class="update-footer">
+          <span class="update-author">— Basil Jijo (Founder)</span>
+        </div>
+      </div>
+
+      <div class="update-card">
+        <div class="update-meta">
+          <span class="update-tag tag-planning">📋 Planning</span>
+          <span class="update-date">Coming Soon</span>
+        </div>
+        <h3>📍 Location Scouting</h3>
+        <p>We'll be posting updates on potential locations for the cafe. Stay tuned!</p>
+        <div class="update-footer">
+          <span class="update-status">⏳ In Progress</span>
+        </div>
+      </div>
+
+      <div class="update-card">
+        <div class="update-meta">
+          <span class="update-tag tag-planning">💸 Budget</span>
+          <span class="update-date">Coming Soon</span>
+        </div>
+        <h3>💰 Budget Planning</h3>
+        <p>Breaking down the costs of setup — PCs, furniture, networking, food station, and more.</p>
+        <div class="update-footer">
+          <span class="update-status">⏳ In Progress</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="section-cta">
+      <p>Have suggestions for our updates? Drop them in the community section below 👇</p>
+    </div>
+  </section>
+
+  <!-- EQUIPMENT SECTION -->
+  <section class="section section-dark" id="equipment">
+    <div class="section-header">
+      <span class="section-tag">🖥️ BATTLESTATIONS</span>
+      <h2 class="section-title">Equipment <span class="neon">Planning</span></h2>
+      <p class="section-desc">What hardware should Dreamscape run on? We're researching the best value gaming setups. Share your suggestions!</p>
+    </div>
+    <div class="equipment-grid">
+
+      <div class="equip-card">
+        <div class="equip-icon">🖥️</div>
+        <h3>Gaming PCs</h3>
+        <ul class="equip-list">
+          <li><span class="check">→</span> High-end gaming rigs (RTX 4070+)</li>
+          <li><span class="check">→</span> 240Hz+ monitors</li>
+          <li><span class="check">→</span> Mechanical keyboards</li>
+          <li><span class="check">→</span> Pro gaming mice</li>
+        </ul>
+        <div class="equip-status">🔍 Researching</div>
+      </div>
+
+      <div class="equip-card">
+        <div class="equip-icon">🎧</div>
+        <h3>Audio & Peripherals</h3>
+        <ul class="equip-list">
+          <li><span class="check">→</span> Surround sound headsets</li>
+          <li><span class="check">→</span> Gaming chairs (ErgoChair / DXRacer)</li>
+          <li><span class="check">→</span> RGB ambience lighting</li>
+          <li><span class="check">→</span> Wrist rests & mousepads</li>
+        </ul>
+        <div class="equip-status">🔍 Researching</div>
+      </div>
+
+      <div class="equip-card">
+        <div class="equip-icon">🕹️</div>
+        <h3>Consoles Corner</h3>
+        <ul class="equip-list">
+          <li><span class="check">→</span> PlayStation 5</li>
+          <li><span class="check">→</span> Xbox Series X</li>
+          <li><span class="check">→</span> Nintendo Switch</li>
+          <li><span class="check">→</span> VR Station (Meta Quest)</li>
+        </ul>
+        <div class="equip-status">💡 Considering</div>
+      </div>
+
+      <div class="equip-card">
+        <div class="equip-icon">🌐</div>
+        <h3>Network & Infrastructure</h3>
+        <ul class="equip-list">
+          <li><span class="check">→</span> 1 Gbps fiber internet</li>
+          <li><span class="check">→</span> Dedicated gaming switches</li>
+          <li><span class="check">→</span> UPS backup power</li>
+          <li><span class="check">→</span> Air conditioning setup</li>
+        </ul>
+        <div class="equip-status">📐 Planning</div>
+      </div>
+
+    </div>
+    <div class="vote-box">
+      <h3>🗳️ What PC tier should we go with?</h3>
+      <div class="vote-options">
+        <button class="vote-btn" onclick="vote(this, 'pc-budget')">💚 Budget Beast (₹60K–80K)</button>
+        <button class="vote-btn" onclick="vote(this, 'pc-mid')">💛 Mid Range (₹1L–1.5L)</button>
+        <button class="vote-btn" onclick="vote(this, 'pc-high')">🔴 High End (₹2L+)</button>
+      </div>
+      <p class="vote-result" id="vote-result-pc"></p>
+    </div>
+  </section>
+
+  <!-- DESIGN SECTION -->
+  <section class="section" id="design">
+    <div class="section-header">
+      <span class="section-tag">🎨 AESTHETICS</span>
+      <h2 class="section-title">Cafe <span class="neon">Design</span></h2>
+      <p class="section-desc">The vibe matters as much as the hardware. Here's what we're thinking for the look and feel of Dreamscape.</p>
+    </div>
+    <div class="design-grid">
+
+      <div class="design-card">
+        <div class="design-icon">🌌</div>
+        <h3>Theme: Cyberpunk / Neon</h3>
+        <p>Dark ambient lighting with neon purple, cyan, and pink accents. Think Blade Runner meets your dream gaming den.</p>
+        <div class="design-tag">🏆 Top Choice</div>
+      </div>
+
+      <div class="design-card">
+        <div class="design-icon">🚀</div>
+        <h3>Theme: Sci-Fi / Space</h3>
+        <p>Starship interior vibe. Dark backgrounds, galaxy murals, LED ceiling panels, and space-themed station names.</p>
+        <div class="design-tag">💡 Considering</div>
+      </div>
+
+      <div class="design-card">
+        <div class="design-icon">🏯</div>
+        <h3>Theme: Retro Arcade</h3>
+        <p>Pixel art murals, retro cabinets, neon signs, checkerboard floors. A nostalgic gaming paradise.</p>
+        <div class="design-tag">💡 Considering</div>
+      </div>
+
+      <div class="design-card">
+        <div class="design-icon">🪑</div>
+        <h3>Layout Plan</h3>
+        <ul class="equip-list">
+          <li><span class="check">→</span> 20–30 gaming stations</li>
+          <li><span class="check">→</span> Private pods / semi-private booths</li>
+          <li><span class="check">→</span> Console lounge area</li>
+          <li><span class="check">→</span> Food & drinks bar</li>
+          <li><span class="check">→</span> Tournament / streaming stage</li>
+        </ul>
+        <div class="design-tag">📐 Planning</div>
+      </div>
+
+    </div>
+    <div class="vote-box">
+      <h3>🗳️ Which theme should Dreamscape go with?</h3>
+      <div class="vote-options">
+        <button class="vote-btn" onclick="vote(this, 'theme-cyber')">🌌 Cyberpunk Neon</button>
+        <button class="vote-btn" onclick="vote(this, 'theme-space')">🚀 Sci-Fi Space</button>
+        <button class="vote-btn" onclick="vote(this, 'theme-retro')">🏯 Retro Arcade</button>
+      </div>
+      <p class="vote-result" id="vote-result-theme"></p>
+    </div>
+  </section>
+
+  <!-- GAMES SECTION -->
+  <section class="section section-dark" id="games">
+    <div class="section-header">
+      <span class="section-tag">🎮 GAME LIBRARY</span>
+      <h2 class="section-title">Games & <span class="neon">Services</span></h2>
+      <p class="section-desc">What should be on the Dreamscape menu of games and services? Vote for your favourites!</p>
+    </div>
+    <div class="games-grid">
+
+      <div class="game-card">
+        <div class="game-icon">⚔️</div>
+        <h3>Competitive FPS</h3>
+        <p>Valorant, CS2, Apex Legends — for the competitive warriors who want to climb the ranks.</p>
+        <div class="game-tag">🔥 High Demand</div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-icon">🏆</div>
+        <h3>Battle Royale</h3>
+        <p>PUBG, Warzone, Fortnite — squad up with friends and be the last one standing.</p>
+        <div class="game-tag">🔥 High Demand</div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-icon">🧙</div>
+        <h3>RPG & Story Games</h3>
+        <p>Elden Ring, Cyberpunk 2077, GTA V — for those who love deep narratives and open worlds.</p>
+        <div class="game-tag">💡 Popular</div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-icon">⚽</div>
+        <h3>Sports & Racing</h3>
+        <p>FC24, Gran Turismo, F1 — with steering wheels and sport controllers for the full experience.</p>
+        <div class="game-tag">💡 Popular</div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-icon">👾</div>
+        <h3>VR Experiences</h3>
+        <p>Beat Saber, Half-Life: Alyx, VR escape rooms — next-level immersive experiences.</p>
+        <div class="game-tag">✨ Premium</div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-icon">🏟️</div>
+        <h3>Tournaments & Events</h3>
+        <p>Weekly tournaments, LAN parties, streaming events, and game launch watch parties.</p>
+        <div class="game-tag">🎉 Events</div>
+      </div>
+
+    </div>
+    <div class="services-section">
+      <h3 class="services-title">💼 Our Services</h3>
+      <div class="services-grid">
+        <div class="service-item"><i class="fas fa-clock"></i><span>Hourly / Package Rates</span></div>
+        <div class="service-item"><i class="fas fa-users"></i><span>Group Bookings</span></div>
+        <div class="service-item"><i class="fas fa-birthday-cake"></i><span>Birthday Parties</span></div>
+        <div class="service-item"><i class="fas fa-trophy"></i><span>Tournaments</span></div>
+        <div class="service-item"><i class="fas fa-wifi"></i><span>High-Speed Internet</span></div>
+        <div class="service-item"><i class="fas fa-headset"></i><span>Pro Coaching Sessions</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOD SECTION -->
+  <section class="section" id="food">
+    <div class="section-header">
+      <span class="section-tag">🍕 FUEL STATION</span>
+      <h2 class="section-title">Food & <span class="neon">Drinks</span></h2>
+      <p class="section-desc">Gaming fuel is serious business. Here's what we're planning for the Dreamscape menu. Tell us what you want!</p>
+    </div>
+    <div class="food-grid">
+
+      <div class="food-card">
+        <div class="food-emoji">☕</div>
+        <h3>Hot Beverages</h3>
+        <ul class="food-list">
+          <li>☕ Gaming Coffee (Espresso shots)</li>
+          <li>🧋 Bubble Tea (multiple flavors)</li>
+          <li>🍵 Matcha Latte</li>
+          <li>🍫 Hot Chocolate</li>
+        </ul>
+      </div>
+
+      <div class="food-card">
+        <div class="food-emoji">🥤</div>
+        <h3>Cold Drinks</h3>
+        <ul class="food-list">
+          <li>⚡ Energy Drinks (Red Bull, Monster)</li>
+          <li>🥤 Fresh Mocktails</li>
+          <li>🧃 Cold Brew Coffee</li>
+          <li>🍋 Lemonade & Sodas</li>
+        </ul>
+      </div>
+
+      <div class="food-card">
+        <div class="food-emoji">🍕</div>
+        <h3>Snacks & Bites</h3>
+        <ul class="food-list">
+          <li>🍕 Mini Pizzas & Wraps</li>
+          <li>🍟 Fries & Nachos</li>
+          <li>🌮 Loaded Sandwiches</li>
+          <li>🧀 Cheese Rolls</li>
+        </ul>
+      </div>
+
+      <div class="food-card">
+        <div class="food-emoji">🍜</div>
+        <h3>Gaming Meals</h3>
+        <ul class="food-list">
+          <li>🍜 Instant Noodle Bowls</li>
+          <li>🍱 Rice + Curry Combos</li>
+          <li>🫔 Protein Wraps</li>
+          <li>🥗 Healthy Salad Bowls</li>
+        </ul>
+      </div>
+
+      <div class="food-card">
+        <div class="food-emoji">🍦</div>
+        <h3>Desserts</h3>
+        <ul class="food-list">
+          <li>🍦 Soft Serve Ice Cream</li>
+          <li>🧁 Themed Cupcakes</li>
+          <li>🍩 Donuts & Waffles</li>
+          <li>🍫 Chocolate Lava Cake</li>
+        </ul>
+      </div>
+
+      <div class="food-card special">
+        <div class="food-emoji">⭐</div>
+        <h3>Signature Items</h3>
+        <ul class="food-list">
+          <li>🎮 "Respawn" Energy Shake</li>
+          <li>🔥 "Critical Hit" Burger</li>
+          <li>💜 "Dreamscape" Special Coffee</li>
+          <li>⚡ "Boss Battle" Platter</li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="vote-box">
+      <h3>🗳️ What food style should we focus on?</h3>
+      <div class="vote-options">
+        <button class="vote-btn" onclick="vote(this, 'food-snacks')">🍟 Snacks & Drinks Only</button>
+        <button class="vote-btn" onclick="vote(this, 'food-full')">🍱 Full Meals + Snacks</button>
+        <button class="vote-btn" onclick="vote(this, 'food-themed')">⭐ Themed Signature Menu</button>
+      </div>
+      <p class="vote-result" id="vote-result-food"></p>
+    </div>
+  </section>
+
+  <!-- COMMUNITY SECTION -->
+  <section class="section section-dark" id="community">
+    <div class="section-header">
+      <span class="section-tag">💬 JOIN US</span>
+      <h2 class="section-title">Community <span class="neon">Hub</span></h2>
+      <p class="section-desc">Dreamscape is built by the community, for the community. Share your ideas, suggestions, and thoughts below!</p>
+    </div>
+    <div class="community-grid">
+
+      <div class="community-card">
+        <div class="comm-icon"><i class="fab fa-github"></i></div>
+        <h3>GitHub Discussions</h3>
+        <p>Open a discussion on our GitHub repo — suggest equipment, design ideas, menu items, or anything you'd like to see at Dreamscape!</p>
+        <a href="https://github.com/Basiljijo121/dreamscape-gaming-cafe/discussions" target="_blank" class="btn btn-primary comm-btn">Open Discussion →</a>
+      </div>
+
+      <div class="community-card">
+        <div class="comm-icon"><i class="fab fa-github"></i></div>
+        <h3>Raise an Issue / Idea</h3>
+        <p>Have a specific idea or suggestion? Raise a GitHub Issue! Tag it as "idea", "equipment", "food", or "design".</p>
+        <a href="https://github.com/Basiljijo121/dreamscape-gaming-cafe/issues/new" target="_blank" class="btn btn-outline comm-btn">Submit Idea →</a>
+      </div>
+
+      <div class="community-card">
+        <div class="comm-icon">📧</div>
+        <h3>Drop a Message</h3>
+        <p>Want to reach the founder directly? Fill out this quick form and Basil will personally read every message!</p>
+        <form class="contact-form" onsubmit="handleContact(event)">
+          <input type="text" placeholder="Your name" class="form-input" id="contactName" required />
+          <input type="email" placeholder="Your email" class="form-input" id="contactEmail" />
+          <textarea placeholder="Your idea or message..." class="form-textarea" id="contactMsg" required></textarea>
+          <button type="submit" class="btn btn-primary" style="width:100%">Send Message 🚀</button>
+        </form>
+        <p class="form-note" id="form-note"></p>
+      </div>
+
+    </div>
+
+    <div class="idea-board">
+      <h3>💡 Top Ideas from the Community</h3>
+      <div class="idea-list" id="ideaList">
+        <div class="idea-item">
+          <span class="idea-vote">❤️ 12</span>
+          <span class="idea-text">Add a VR gaming zone with rotating experiences every week</span>
+        </div>
+        <div class="idea-item">
+          <span class="idea-vote">❤️ 8</span>
+          <span class="idea-text">Student discounts during weekday afternoons</span>
+        </div>
+        <div class="idea-item">
+          <span class="idea-vote">❤️ 6</span>
+          <span class="idea-text">Have a streaming room where people can stream on Twitch/YouTube</span>
+        </div>
+        <div class="idea-item">
+          <span class="idea-vote">❤️ 5</span>
+          <span class="idea-text">Loyalty card — every 10 hours, get 1 hour free</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="brand-icon">🎮</span>
+        <span class="brand-name">DREAMSCAPE GAMING CAFE</span>
+      </div>
+      <p class="footer-tagline">Where Every Session is an Adventure</p>
+      <div class="footer-links">
+        <a href="https://github.com/Basiljijo121/dreamscape-gaming-cafe" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        <a href="#community">💬 Community</a>
+        <a href="#updates">📡 Updates</a>
+      </div>
+      <p class="footer-copy">© 2026 Dreamscape Gaming Cafe · Built with ❤️ by Basil Jijo · Opening Soon!</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
