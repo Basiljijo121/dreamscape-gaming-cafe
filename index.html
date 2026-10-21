@@ -378,7 +378,12 @@
               <span class="chat-stream-dot"></span>
               <span class="chat-header-title">Live Chat Stream</span>
             </div>
-            <span class="chat-total-counter" id="chatMsgCount">Connecting...</span>
+            <div class="header-actions">
+              <button type="button" class="admin-mod-btn" id="adminModBtn" onclick="toggleFounderAdmin()" title="Founder Delete & Moderation Controls">
+                <i class="fas fa-shield-alt"></i> <span id="adminModLabel">Founder Mod</span>
+              </button>
+              <span class="chat-total-counter" id="chatMsgCount">Connecting...</span>
+            </div>
           </div>
 
           <!-- Pinned Announcement (YouTube SuperChat style) -->
