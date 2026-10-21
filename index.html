@@ -25,6 +25,7 @@
       <li><a href="#gadgets">Gadgets</a></li>
       <li><a href="#design">Design</a></li>
       <li><a href="#games">Games</a></li>
+      <li><a href="#chat">Live Chat</a></li>
       <li><a href="#community">Community</a></li>
     </ul>
     <button class="hamburger" id="hamburger">
@@ -314,6 +315,70 @@
         <div class="service-item"><i class="fas fa-trophy"></i><span>Tournaments</span></div>
         <div class="service-item"><i class="fas fa-wifi"></i><span>High-Speed Internet</span></div>
       </div>
+    </div>
+  </section>
+
+  <!-- LIVE CHAT SECTION -->
+  <section class="section" id="chat">
+    <div class="section-header">
+      <span class="section-tag">💬 REAL-TIME CHAT &amp; SUGGESTIONS</span>
+      <h2 class="section-title">Community <span class="neon">Chat Space</span></h2>
+      <p class="section-desc">Drop your ideas, gadget recommendations, game requests, or design suggestions. Everything shows up live in the chat below! 🎮</p>
+    </div>
+
+    <div class="chat-wrapper">
+      <!-- Chat Header -->
+      <div class="chat-topbar">
+        <div class="chat-status">
+          <span class="chat-live-dot"></span>
+          <span class="chat-live-label">LIVE FEED</span>
+        </div>
+        <div class="chat-filter-bar">
+          <button type="button" class="filter-pill active" data-cat="All" onclick="filterChat('All')">🔥 All</button>
+          <button type="button" class="filter-pill" data-cat="Gadgets" onclick="filterChat('Gadgets')">🖥️ Gadgets</button>
+          <button type="button" class="filter-pill" data-cat="Games" onclick="filterChat('Games')">🎮 Games</button>
+          <button type="button" class="filter-pill" data-cat="Design" onclick="filterChat('Design')">🎨 Design</button>
+          <button type="button" class="filter-pill" data-cat="Ideas" onclick="filterChat('Ideas')">💡 Ideas</button>
+        </div>
+        <span class="chat-msg-count" id="chatMsgCount">Connecting...</span>
+      </div>
+
+      <!-- Messages Window -->
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-loading" id="chatLoading">
+          <div class="spinner"></div>
+          <p>Connecting to live chat...</p>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <form class="chat-input-area" id="chatForm" onsubmit="handleSendChat(event)">
+        <div class="chat-input-top">
+          <div class="chat-field-wrap">
+            <span class="field-icon">👤</span>
+            <input type="text" id="chatName" class="chat-field" placeholder="Your Gamer Tag / Name" maxlength="20" required />
+          </div>
+          <div class="chat-field-wrap category-wrap">
+            <span class="field-icon">🏷️</span>
+            <select id="chatCategory" class="chat-field chat-select">
+              <option value="Gadgets">🖥️ Gadget Suggestion</option>
+              <option value="Games">🎮 Game Request</option>
+              <option value="Design">🎨 Design / Vibe Idea</option>
+              <option value="Ideas" selected>💡 General Idea</option>
+            </select>
+          </div>
+        </div>
+        <div class="chat-input-bottom">
+          <input type="text" id="chatMsg" class="chat-msg-input" placeholder="Type your suggestion or message here (strangers will see it live!)..." maxlength="300" required autocomplete="off" />
+          <button type="submit" class="btn btn-primary chat-send-btn" id="chatSendBtn">
+            <span>Send</span> <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+        <div class="chat-input-footer">
+          <span class="chat-tip">⚡ Real-time updates · Auto-saved to community feed</span>
+          <span class="chat-char-counter" id="charCounter">300 left</span>
+        </div>
+      </form>
     </div>
   </section>
 
