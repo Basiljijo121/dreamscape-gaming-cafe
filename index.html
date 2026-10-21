@@ -318,67 +318,137 @@
     </div>
   </section>
 
-  <!-- LIVE CHAT SECTION -->
-  <section class="section" id="chat">
+  <!-- LIVE STREAM CHAT SECTION -->
+  <section class="section stream-section" id="chat">
     <div class="section-header">
-      <span class="section-tag">💬 REAL-TIME CHAT &amp; SUGGESTIONS</span>
-      <h2 class="section-title">Community <span class="neon">Chat Space</span></h2>
-      <p class="section-desc">Drop your ideas, gadget recommendations, game requests, or design suggestions. Everything shows up live in the chat below! 🎮</p>
+      <span class="section-tag">🔴 LIVE BROADCAST STREAM</span>
+      <h2 class="section-title">Community <span class="neon">Live Stream Chat</span></h2>
+      <p class="section-desc">Experience our real-time gaming stream chat. Every suggestion and message appears with full date &amp; sent timestamp in a scrollable live stream feed! 🎮</p>
     </div>
 
-    <div class="chat-wrapper">
-      <!-- Chat Header -->
-      <div class="chat-topbar">
-        <div class="chat-status">
-          <span class="chat-live-dot"></span>
-          <span class="chat-live-label">LIVE FEED</span>
+    <!-- Live Stream Container -->
+    <div class="stream-container">
+      <!-- Live Stage (Left Column) -->
+      <div class="stream-stage">
+        <div class="stage-overlay">
+          <div class="stage-header">
+            <span class="live-badge"><span class="badge-dot"></span> LIVE</span>
+            <span class="viewers-badge"><i class="fas fa-eye"></i> <span id="viewerCount">248</span> watching</span>
+            <span class="stream-topic">#DreamscapeLive</span>
+          </div>
+
+          <div class="stage-center">
+            <div class="pulse-radar"></div>
+            <div class="stage-avatar-ring">
+              <span class="stage-emoji">🎮</span>
+            </div>
+            <h3 class="stage-title">DREAMSCAPE GAMING CAFE</h3>
+            <p class="stage-subtitle">Live Community Planning Studio</p>
+            <div class="stage-stats-chips">
+              <span class="stage-chip"><i class="fas fa-map-marker-alt"></i> Location Scouting</span>
+              <span class="stage-chip"><i class="fas fa-microchip"></i> High-End Gadgets</span>
+              <span class="stage-chip"><i class="fas fa-gamepad"></i> Esports Arena</span>
+            </div>
+          </div>
+
+          <!-- Flying Reactions Layer (Instagram Live style) -->
+          <div class="flying-reactions" id="flyingReactions"></div>
+
+          <!-- Stage Reaction Bar -->
+          <div class="stage-reaction-bar">
+            <span class="reaction-label">Send Reaction:</span>
+            <div class="reaction-buttons">
+              <button type="button" class="react-btn" onclick="triggerReaction('❤️')">❤️</button>
+              <button type="button" class="react-btn" onclick="triggerReaction('🔥')">🔥</button>
+              <button type="button" class="react-btn" onclick="triggerReaction('🎮')">🎮</button>
+              <button type="button" class="react-btn" onclick="triggerReaction('🚀')">🚀</button>
+              <button type="button" class="react-btn" onclick="triggerReaction('👏')">👏</button>
+              <button type="button" class="react-btn" onclick="triggerReaction('⚡')">⚡</button>
+            </div>
+          </div>
         </div>
-        <div class="chat-filter-bar">
-          <button type="button" class="filter-pill active" data-cat="All" onclick="filterChat('All')">🔥 All</button>
-          <button type="button" class="filter-pill" data-cat="Gadgets" onclick="filterChat('Gadgets')">🖥️ Gadgets</button>
-          <button type="button" class="filter-pill" data-cat="Games" onclick="filterChat('Games')">🎮 Games</button>
-          <button type="button" class="filter-pill" data-cat="Design" onclick="filterChat('Design')">🎨 Design</button>
-          <button type="button" class="filter-pill" data-cat="Ideas" onclick="filterChat('Ideas')">💡 Ideas</button>
-        </div>
-        <span class="chat-msg-count" id="chatMsgCount">Connecting...</span>
       </div>
 
-      <!-- Messages Window -->
-      <div class="chat-messages" id="chatMessages">
-        <div class="chat-loading" id="chatLoading">
-          <div class="spinner"></div>
-          <p>Connecting to live chat...</p>
-        </div>
-      </div>
+      <!-- Live Chat Column (YouTube / IG Live Style) -->
+      <div class="stream-chat-box">
+        <!-- Top Chat Header -->
+        <div class="chat-live-header">
+          <div class="header-main">
+            <div class="chat-title-group">
+              <span class="chat-stream-dot"></span>
+              <span class="chat-header-title">Live Chat Stream</span>
+            </div>
+            <span class="chat-total-counter" id="chatMsgCount">Connecting...</span>
+          </div>
 
-      <!-- Input Area -->
-      <form class="chat-input-area" id="chatForm" onsubmit="handleSendChat(event)">
-        <div class="chat-input-top">
-          <div class="chat-field-wrap">
-            <span class="field-icon">👤</span>
-            <input type="text" id="chatName" class="chat-field" placeholder="Your Gamer Tag / Name" maxlength="20" required />
+          <!-- Pinned Announcement (YouTube SuperChat style) -->
+          <div class="pinned-banner">
+            <div class="pinned-icon"><i class="fas fa-thumbtack"></i></div>
+            <div class="pinned-content">
+              <strong>Pinned by Basil (Founder):</strong>
+              <span>Welcome gamers! Drop your PC gadget picks, favorite games, and cafe vibe suggestions. Every message shows with exact date &amp; sent time!</span>
+            </div>
           </div>
-          <div class="chat-field-wrap category-wrap">
-            <span class="field-icon">🏷️</span>
-            <select id="chatCategory" class="chat-field chat-select">
-              <option value="Gadgets">🖥️ Gadget Suggestion</option>
-              <option value="Games">🎮 Game Request</option>
-              <option value="Design">🎨 Design / Vibe Idea</option>
-              <option value="Ideas" selected>💡 General Idea</option>
-            </select>
+
+          <!-- Filter Pills -->
+          <div class="stream-filter-bar">
+            <button type="button" class="stream-pill active" data-cat="All" onclick="filterChat('All')">🔥 All Chats</button>
+            <button type="button" class="stream-pill" data-cat="Gadgets" onclick="filterChat('Gadgets')">🖥️ Gadgets</button>
+            <button type="button" class="stream-pill" data-cat="Games" onclick="filterChat('Games')">🎮 Games</button>
+            <button type="button" class="stream-pill" data-cat="Design" onclick="filterChat('Design')">🎨 Design</button>
+            <button type="button" class="stream-pill" data-cat="Ideas" onclick="filterChat('Ideas')">💡 Ideas</button>
           </div>
         </div>
-        <div class="chat-input-bottom">
-          <input type="text" id="chatMsg" class="chat-msg-input" placeholder="Type your suggestion or message here (strangers will see it live!)..." maxlength="300" required autocomplete="off" />
-          <button type="submit" class="btn btn-primary chat-send-btn" id="chatSendBtn">
-            <span>Send</span> <i class="fas fa-paper-plane"></i>
-          </button>
+
+        <!-- Scrollable Messages Feed -->
+        <div class="stream-messages" id="chatMessages">
+          <div class="chat-loading" id="chatLoading">
+            <div class="spinner"></div>
+            <p>Connecting to live broadcast stream...</p>
+          </div>
         </div>
-        <div class="chat-input-footer">
-          <span class="chat-tip">⚡ Real-time updates · Auto-saved to community feed</span>
-          <span class="chat-char-counter" id="charCounter">300 left</span>
-        </div>
-      </form>
+
+        <!-- Jump to Latest Floating Pill -->
+        <button type="button" class="jump-latest-btn" id="jumpLatestBtn" onclick="scrollChatToBottom(true)">
+          <i class="fas fa-arrow-down"></i> New messages below
+        </button>
+
+        <!-- Live Chat Input Bar -->
+        <form class="stream-chat-input" id="chatForm" onsubmit="handleSendChat(event)">
+          <div class="input-user-row">
+            <div class="input-name-field">
+              <i class="fas fa-user-astronaut"></i>
+              <input type="text" id="chatName" placeholder="Your Gamer Tag..." maxlength="20" required />
+            </div>
+            <div class="input-category-select">
+              <select id="chatCategory">
+                <option value="Gadgets">🖥️ Gadgets</option>
+                <option value="Games">🎮 Games</option>
+                <option value="Design">🎨 Design</option>
+                <option value="Ideas" selected>💡 General Idea</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-text-row">
+            <input type="text" id="chatMsg" class="live-input-field" placeholder="Chat live with date & time stamp..." maxlength="300" required autocomplete="off" />
+            <button type="submit" class="live-send-btn" id="chatSendBtn" title="Send Chat">
+              <span>Send</span> <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+
+          <div class="input-quick-emojis">
+            <span class="emoji-label">Quick emoji:</span>
+            <span class="quick-em" onclick="insertEmoji('🔥')">🔥</span>
+            <span class="quick-em" onclick="insertEmoji('🎮')">🎮</span>
+            <span class="quick-em" onclick="insertEmoji('💻')">💻</span>
+            <span class="quick-em" onclick="insertEmoji('🚀')">🚀</span>
+            <span class="quick-em" onclick="insertEmoji('⚡')">⚡</span>
+            <span class="quick-em" onclick="insertEmoji('❤️')">❤️</span>
+            <span class="char-count" id="charCounter">300</span>
+          </div>
+        </form>
+      </div>
     </div>
   </section>
 
