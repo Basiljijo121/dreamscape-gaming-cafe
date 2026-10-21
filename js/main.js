@@ -177,8 +177,14 @@ window.addEventListener('scroll', () => {
 (function initCommunityLiveChat() {
   const CHAT_TOPIC = 'dreamscape_gaming_cafe_live_chat';
   const CHAT_URL = `https://ntfy.sh/${CHAT_TOPIC}`;
-  const STORAGE_KEY = 'dreamscape_chat_messages_v2';
-  const UPVOTES_KEY = 'dreamscape_chat_upvotes_v2';
+  // Clear legacy seed cache
+  try {
+    localStorage.removeItem('dreamscape_chat_messages_v1');
+    localStorage.removeItem('dreamscape_chat_messages_v2');
+  } catch (e) {}
+
+  const STORAGE_KEY = 'dreamscape_chat_messages_real_v3';
+  const UPVOTES_KEY = 'dreamscape_chat_upvotes_real_v3';
   const USER_KEY = 'dreamscape_chat_username';
 
   const chatMessagesEl = document.getElementById('chatMessages');
@@ -189,7 +195,6 @@ window.addEventListener('scroll', () => {
   const chatMsgCountEl = document.getElementById('chatMsgCount');
   const charCounterEl = document.getElementById('charCounter');
   const jumpLatestBtn = document.getElementById('jumpLatestBtn');
-  const viewerCountEl = document.getElementById('viewerCount');
   const flyingReactionsEl = document.getElementById('flyingReactions');
   const filterPills = document.querySelectorAll('.stream-pill');
 
@@ -214,7 +219,7 @@ window.addEventListener('scroll', () => {
     });
   }
 
-  // Scroll detection for YouTube-style "Jump to latest"
+  // Scroll detection for "Jump to latest"
   chatMessagesEl.addEventListener('scroll', () => {
     const distanceFromBottom = chatMessagesEl.scrollHeight - chatMessagesEl.scrollTop - chatMessagesEl.clientHeight;
     isUserScrolledUp = distanceFromBottom > 120;
@@ -227,16 +232,6 @@ window.addEventListener('scroll', () => {
     }
   });
 
-  // Dynamic viewer count simulation (YouTube / IG Live feel)
-  let currentViewers = 248;
-  setInterval(() => {
-    const change = Math.floor(Math.random() * 7) - 3;
-    currentViewers = Math.max(180, Math.min(350, currentViewers + change));
-    if (viewerCountEl) {
-      viewerCountEl.textContent = currentViewers;
-    }
-  }, 4000);
-
   // Quick Emoji Insertion
   window.insertEmoji = function(emoji) {
     if (!chatMsgEl) return;
@@ -247,7 +242,7 @@ window.addEventListener('scroll', () => {
     }
   };
 
-  // Flying Instagram Live Floating Reactions
+  // Flying Floating Reactions
   window.triggerReaction = function(emoji) {
     if (!flyingReactionsEl) return;
     for (let i = 0; i < 3; i++) {
@@ -263,49 +258,12 @@ window.addEventListener('scroll', () => {
     }
   };
 
-  // Default seed messages with realistic timestamps
-  const defaultSeeds = [
-    {
-      id: 'seed-1',
-      name: 'Basil (Founder)',
-      isFounder: true,
-      tag: 'Announcement',
-      text: '🔥 Welcome to Dreamscape Live Chat! We are actively designing the cafe. Drop what monitors, keyboards, games, and lounge designs you want to see!',
-      time: Date.now() - 3600000 * 4,
-      upvotes: 38
-    },
-    {
-      id: 'seed-2',
-      name: 'ViperX',
-      tag: 'Gadgets',
-      text: '240Hz+ gaming monitors are a must for competitive FPS. Also please go with low-latency optical gaming mice like Razer DeathAdder or Logitech G Pro!',
-      time: Date.now() - 3600000 * 2.5,
-      upvotes: 21
-    },
-    {
-      id: 'seed-3',
-      name: 'KavyaGamer',
-      tag: 'Games',
-      text: 'Weekly LAN tournaments on Saturdays! Valorant 5v5 and EA Sports FC24. The local gaming community will flock to this cafe for sure!',
-      time: Date.now() - 3600000 * 1.5,
-      upvotes: 19
-    },
-    {
-      id: 'seed-4',
-      name: 'CyberRonin',
-      tag: 'Design',
-      text: 'Make sure there are private streaming sound-dampened booths for creators, along with the open battlestations. The cyberpunk neon vibe will be fire 🔥',
-      time: Date.now() - 1800000,
-      upvotes: 15
-    }
-  ];
-
-  // Initialize messages from localStorage or defaults
+  // Only load real messages from localStorage (no fake defaultSeeds)
   try {
     const cached = localStorage.getItem(STORAGE_KEY);
-    messages = cached ? JSON.parse(cached) : defaultSeeds;
+    messages = cached ? JSON.parse(cached) : [];
   } catch (e) {
-    messages = defaultSeeds;
+    messages = [];
   }
 
   renderMessages();
@@ -395,14 +353,17 @@ window.addEventListener('scroll', () => {
       : messages.filter(m => m.tag === activeFilter);
 
     if (chatMsgCountEl) {
-      chatMsgCountEl.textContent = `${messages.length} live message${messages.length === 1 ? '' : 's'}`;
+      chatMsgCountEl.textContent = messages.length === 0
+        ? '0 messages'
+        : `${messages.length} message${messages.length === 1 ? '' : 's'}`;
     }
 
     if (filtered.length === 0) {
       chatMessagesEl.innerHTML = `
         <div class="chat-loading">
-          <div style="font-size:2.5rem;margin-bottom:0.5rem">💬</div>
-          <p>No comments in <strong>${escapeHtml(activeFilter)}</strong> yet.<br>Type below to be the first live comment!</p>
+          <div style="font-size:2.8rem;margin-bottom:0.6rem">💬</div>
+          <h4 style="color:#fff;font-family:var(--font-title);font-size:1.05rem;margin-bottom:0.35rem">No messages yet</h4>
+          <p style="color:var(--text-secondary);font-size:0.88rem;max-width:320px;margin:0 auto">Be the first to share an idea, gadget suggestion, or game request with Basil!</p>
         </div>
       `;
       return;
@@ -486,7 +447,7 @@ window.addEventListener('scroll', () => {
           const item = JSON.parse(line);
           if (item.message) {
             const data = JSON.parse(item.message);
-            if (data && data.text && !messages.some(m => m.id === data.id || (m.name === data.name && m.text === data.text))) {
+            if (data && data.text && (!data.id || !String(data.id).startsWith('seed-')) && !messages.some(m => m.id === data.id || (m.name === data.name && m.text === data.text))) {
               messages.push(data);
               addedNew = true;
             }
@@ -514,7 +475,7 @@ window.addEventListener('scroll', () => {
           const data = JSON.parse(event.data);
           if (data && data.message) {
             const parsed = JSON.parse(data.message);
-            if (parsed && parsed.text && !messages.some(m => m.id === parsed.id)) {
+            if (parsed && parsed.text && (!parsed.id || !String(parsed.id).startsWith('seed-')) && !messages.some(m => m.id === parsed.id)) {
               messages.push(parsed);
               saveMessagesToStorage();
               renderMessages();
