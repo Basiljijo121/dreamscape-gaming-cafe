@@ -47,36 +47,6 @@ navLinks.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', () => navLinks.classList.remove('open'));
 });
 
-// ---- COUNTDOWN TIMER ----
-// Target: ~3.5 months from now (mid-February 2027)
-const launchDate = new Date('2027-02-15T10:00:00+05:30');
-
-function updateCountdown() {
-  const now = new Date();
-  const diff = launchDate - now;
-
-  if (diff <= 0) {
-    document.getElementById('days').textContent = '00';
-    document.getElementById('hours').textContent = '00';
-    document.getElementById('mins').textContent = '00';
-    document.getElementById('secs').textContent = '00';
-    return;
-  }
-
-  const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const secs  = Math.floor((diff % (1000 * 60)) / 1000);
-
-  document.getElementById('days').textContent  = String(days).padStart(2, '0');
-  document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-  document.getElementById('mins').textContent  = String(mins).padStart(2, '0');
-  document.getElementById('secs').textContent  = String(secs).padStart(2, '0');
-}
-
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
 // ---- TYPED TEXT ANIMATION ----
 const lines = [
   '> Loading game library... ✓',
@@ -138,9 +108,6 @@ function vote(btn, key) {
     'theme-cyber': '🌌 Cyberpunk Neon',
     'theme-space': '🚀 Sci-Fi Space',
     'theme-retro': '🏯 Retro Arcade',
-    'food-snacks':  '🍟 Snacks & Drinks Only',
-    'food-full':    '🍱 Full Meals + Snacks',
-    'food-themed':  '⭐ Themed Signature Menu',
   };
 
   if (resultEl) {
