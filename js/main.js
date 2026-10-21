@@ -172,13 +172,13 @@ window.addEventListener('scroll', () => {
 });
 
 // =============================================
-//   COMMUNITY CHAT SPACE (REAL-TIME ENGINE)
+//   COMMUNITY LIVE STREAM CHAT (YOUTUBE / IG STYLE)
 // =============================================
-(function initCommunityChat() {
+(function initCommunityLiveChat() {
   const CHAT_TOPIC = 'dreamscape_gaming_cafe_live_chat';
   const CHAT_URL = `https://ntfy.sh/${CHAT_TOPIC}`;
-  const STORAGE_KEY = 'dreamscape_chat_messages_v1';
-  const UPVOTES_KEY = 'dreamscape_chat_upvotes_v1';
+  const STORAGE_KEY = 'dreamscape_chat_messages_v2';
+  const UPVOTES_KEY = 'dreamscape_chat_upvotes_v2';
   const USER_KEY = 'dreamscape_chat_username';
 
   const chatMessagesEl = document.getElementById('chatMessages');
@@ -188,13 +188,17 @@ window.addEventListener('scroll', () => {
   const chatCategoryEl = document.getElementById('chatCategory');
   const chatMsgCountEl = document.getElementById('chatMsgCount');
   const charCounterEl = document.getElementById('charCounter');
-  const filterPills = document.querySelectorAll('.filter-pill');
+  const jumpLatestBtn = document.getElementById('jumpLatestBtn');
+  const viewerCountEl = document.getElementById('viewerCount');
+  const flyingReactionsEl = document.getElementById('flyingReactions');
+  const filterPills = document.querySelectorAll('.stream-pill');
 
   if (!chatMessagesEl || !chatFormEl) return;
 
   let activeFilter = 'All';
   let messages = [];
   let userUpvotes = new Set(JSON.parse(localStorage.getItem(UPVOTES_KEY) || '[]'));
+  let isUserScrolledUp = false;
 
   // Load saved user name
   const savedName = localStorage.getItem(USER_KEY);
@@ -206,44 +210,93 @@ window.addEventListener('scroll', () => {
   if (chatMsgEl && charCounterEl) {
     chatMsgEl.addEventListener('input', () => {
       const remaining = 300 - chatMsgEl.value.length;
-      charCounterEl.textContent = `${remaining} left`;
+      charCounterEl.textContent = `${remaining}`;
     });
   }
 
-  // Default seed messages so chat is lively right away
+  // Scroll detection for YouTube-style "Jump to latest"
+  chatMessagesEl.addEventListener('scroll', () => {
+    const distanceFromBottom = chatMessagesEl.scrollHeight - chatMessagesEl.scrollTop - chatMessagesEl.clientHeight;
+    isUserScrolledUp = distanceFromBottom > 120;
+    if (jumpLatestBtn) {
+      if (isUserScrolledUp) {
+        jumpLatestBtn.classList.add('visible');
+      } else {
+        jumpLatestBtn.classList.remove('visible');
+      }
+    }
+  });
+
+  // Dynamic viewer count simulation (YouTube / IG Live feel)
+  let currentViewers = 248;
+  setInterval(() => {
+    const change = Math.floor(Math.random() * 7) - 3;
+    currentViewers = Math.max(180, Math.min(350, currentViewers + change));
+    if (viewerCountEl) {
+      viewerCountEl.textContent = currentViewers;
+    }
+  }, 4000);
+
+  // Quick Emoji Insertion
+  window.insertEmoji = function(emoji) {
+    if (!chatMsgEl) return;
+    chatMsgEl.value += emoji;
+    chatMsgEl.focus();
+    if (charCounterEl) {
+      charCounterEl.textContent = `${300 - chatMsgEl.value.length}`;
+    }
+  };
+
+  // Flying Instagram Live Floating Reactions
+  window.triggerReaction = function(emoji) {
+    if (!flyingReactionsEl) return;
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => {
+        const el = document.createElement('div');
+        el.className = 'flying-emoji';
+        el.textContent = emoji;
+        el.style.left = `${Math.random() * 70 + 15}%`;
+        el.style.animationDuration = `${Math.random() * 0.8 + 2}s`;
+        flyingReactionsEl.appendChild(el);
+        setTimeout(() => el.remove(), 2600);
+      }, i * 140);
+    }
+  };
+
+  // Default seed messages with realistic timestamps
   const defaultSeeds = [
     {
       id: 'seed-1',
       name: 'Basil (Founder)',
       isFounder: true,
       tag: 'Announcement',
-      text: 'Welcome to the Dreamscape community chat space! Drop your gadget recommendations, game requests, or cafe design ideas below. We read everything!',
-      time: Date.now() - 3600000 * 5,
-      upvotes: 24
+      text: '🔥 Welcome to Dreamscape Live Chat! We are actively designing the cafe. Drop what monitors, keyboards, games, and lounge designs you want to see!',
+      time: Date.now() - 3600000 * 4,
+      upvotes: 38
     },
     {
       id: 'seed-2',
-      name: 'CyberPhantom',
+      name: 'ViperX',
       tag: 'Gadgets',
-      text: 'Please make sure to get 240Hz+ IPS or OLED monitors for competitive shooters. 144Hz is okay, but 240Hz makes a huge difference in Valorant and CS2!',
-      time: Date.now() - 3600000 * 3,
-      upvotes: 18
+      text: '240Hz+ gaming monitors are a must for competitive FPS. Also please go with low-latency optical gaming mice like Razer DeathAdder or Logitech G Pro!',
+      time: Date.now() - 3600000 * 2.5,
+      upvotes: 21
     },
     {
       id: 'seed-3',
-      name: 'Aiden_Plays',
+      name: 'KavyaGamer',
       tag: 'Games',
-      text: 'Host weekly 5v5 tournaments for Valorant & Rocket League with winner prizes or free cafe gaming passes!',
-      time: Date.now() - 3600000 * 2,
-      upvotes: 14
+      text: 'Weekly LAN tournaments on Saturdays! Valorant 5v5 and EA Sports FC24. The local gaming community will flock to this cafe for sure!',
+      time: Date.now() - 3600000 * 1.5,
+      upvotes: 19
     },
     {
       id: 'seed-4',
-      name: 'NeonVibe',
+      name: 'CyberRonin',
       tag: 'Design',
-      text: 'The cyberpunk dark aesthetic with purple and cyan ambient lighting will look insane. Add soundproof gaming booths if possible!',
+      text: 'Make sure there are private streaming sound-dampened booths for creators, along with the open battlestations. The cyberpunk neon vibe will be fire 🔥',
       time: Date.now() - 1800000,
-      upvotes: 11
+      upvotes: 15
     }
   ];
 
@@ -282,6 +335,7 @@ window.addEventListener('scroll', () => {
       userUpvotes.add(id);
       const msg = messages.find(m => m.id === id);
       if (msg) msg.upvotes = (msg.upvotes || 0) + 1;
+      triggerReaction('❤️');
     }
     localStorage.setItem(UPVOTES_KEY, JSON.stringify(Array.from(userUpvotes)));
     saveMessagesToStorage();
@@ -316,10 +370,11 @@ window.addEventListener('scroll', () => {
     messages.push(newMsg);
     saveMessagesToStorage();
     renderMessages();
-    scrollChatToBottom();
+    scrollChatToBottom(true);
+    triggerReaction('🔥');
 
     chatMsgEl.value = '';
-    if (charCounterEl) charCounterEl.textContent = '300 left';
+    if (charCounterEl) charCounterEl.textContent = '300';
     chatMsgEl.focus();
 
     // Broadcast live over network
@@ -340,14 +395,14 @@ window.addEventListener('scroll', () => {
       : messages.filter(m => m.tag === activeFilter);
 
     if (chatMsgCountEl) {
-      chatMsgCountEl.textContent = `${messages.length} message${messages.length === 1 ? '' : 's'}`;
+      chatMsgCountEl.textContent = `${messages.length} live message${messages.length === 1 ? '' : 's'}`;
     }
 
     if (filtered.length === 0) {
       chatMessagesEl.innerHTML = `
         <div class="chat-loading">
-          <div style="font-size:2.5rem;margin-bottom:0.5rem">💭</div>
-          <p>No messages in <strong>${escapeHtml(activeFilter)}</strong> yet. Be the first to post!</p>
+          <div style="font-size:2.5rem;margin-bottom:0.5rem">💬</div>
+          <p>No comments in <strong>${escapeHtml(activeFilter)}</strong> yet.<br>Type below to be the first live comment!</p>
         </div>
       `;
       return;
@@ -359,24 +414,43 @@ window.addEventListener('scroll', () => {
       const isUpvoted = userUpvotes.has(m.id);
       const isOwn = currentUserName && m.name.toLowerCase() === currentUserName;
       const initial = (m.name || 'G').trim().charAt(0).toUpperCase();
-      const timeStr = formatTime(m.time);
+
+      // DEDICATED SENT DATE & TIME
+      const dateObj = new Date(m.time || Date.now());
+      const dateStr = dateObj.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+      const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const relativeTime = getRelativeTime(m.time);
 
       return `
-        <div class="chat-bubble ${isOwn ? 'own' : ''} ${m.isFounder ? 'featured-founder' : ''}" data-id="${m.id}">
-          <div class="bubble-avatar ${m.isFounder ? 'founder' : ''}">${m.isFounder ? '👑' : initial}</div>
-          <div class="bubble-body">
-            <div class="bubble-header">
-              <span class="bubble-name">${escapeHtml(m.name)}</span>
-              ${m.isFounder ? '<span class="bubble-founder-badge">Founder</span>' : ''}
-              <span class="bubble-tag ${m.tag}">${escapeHtml(m.tag || 'Ideas')}</span>
-              <span class="bubble-time">${timeStr}</span>
+        <div class="stream-msg-card ${isOwn ? 'own-msg' : ''} ${m.isFounder ? 'founder-msg' : ''}" data-id="${m.id}">
+          <div class="msg-avatar-wrap">
+            <div class="msg-avatar ${m.isFounder ? 'founder' : ''}">${m.isFounder ? '👑' : initial}</div>
+          </div>
+          <div class="msg-content-wrap">
+            <div class="msg-top-row">
+              <div class="msg-user-info">
+                <span class="msg-user-name">${escapeHtml(m.name)}</span>
+                ${m.isFounder ? '<span class="founder-badge">FOUNDER</span>' : ''}
+                <span class="msg-category-pill cat-${m.tag}">${escapeHtml(m.tag || 'Ideas')}</span>
+              </div>
+              <!-- DEDICATED SENT DATE & TIME SPACE -->
+              <div class="msg-timestamp-space" title="Sent: ${dateStr} at ${timeStr}">
+                <span class="time-date-badge">
+                  <i class="far fa-calendar-alt"></i> ${dateStr}
+                  <span class="time-dot">•</span>
+                  <i class="far fa-clock"></i> ${timeStr}
+                </span>
+              </div>
             </div>
-            <div class="bubble-text">${escapeHtml(m.text)}</div>
-            <div class="bubble-actions">
-              <button type="button" class="upvote-btn ${isUpvoted ? 'upvoted' : ''}" onclick="upvoteMessage('${m.id}')">
+            <div class="msg-bubble-text">
+              ${escapeHtml(m.text)}
+            </div>
+            <div class="msg-bottom-row">
+              <button type="button" class="like-chip ${isUpvoted ? 'liked' : ''}" onclick="upvoteMessage('${m.id}')" title="Upvote this idea">
                 <i class="${isUpvoted ? 'fas' : 'far'} fa-heart"></i>
                 <span>${m.upvotes || 0}</span>
               </button>
+              <span class="relative-time-ago">${relativeTime}</span>
             </div>
           </div>
         </div>
@@ -384,9 +458,12 @@ window.addEventListener('scroll', () => {
     }).join('');
   }
 
-  function scrollChatToBottom() {
-    chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
-  }
+  window.scrollChatToBottom = function(force = false) {
+    if (force || !isUserScrolledUp) {
+      chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+      if (jumpLatestBtn) jumpLatestBtn.classList.remove('visible');
+    }
+  };
 
   function saveMessagesToStorage() {
     try {
@@ -397,7 +474,7 @@ window.addEventListener('scroll', () => {
   // Fetch recent messages from remote server
   async function fetchRemoteHistory() {
     try {
-      const res = await fetch(`${CHAT_URL}/json?poll=1&since=24h`);
+      const res = await fetch(`${CHAT_URL}/json?poll=1&since=48h`);
       if (!res.ok) return;
       const text = await res.text();
       const lines = text.split('\n');
@@ -442,13 +519,13 @@ window.addEventListener('scroll', () => {
               saveMessagesToStorage();
               renderMessages();
               scrollChatToBottom();
+              triggerReaction('⚡');
             }
           }
         } catch (err) {}
       };
 
       es.onerror = function() {
-        // Fallback: poll every 10 seconds if SSE disconnects
         setTimeout(fetchRemoteHistory, 10000);
       };
     } catch (err) {
@@ -456,7 +533,7 @@ window.addEventListener('scroll', () => {
     }
   }
 
-  function formatTime(timestamp) {
+  function getRelativeTime(timestamp) {
     if (!timestamp) return 'Just now';
     const date = new Date(timestamp);
     const now = new Date();
@@ -479,5 +556,5 @@ window.addEventListener('scroll', () => {
   }
 
   // Scroll to bottom on initial load
-  setTimeout(scrollChatToBottom, 200);
+  setTimeout(() => scrollChatToBottom(true), 250);
 })();
