@@ -1532,6 +1532,35 @@ body {
   justify-content: space-between;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.admin-mod-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(180, 79, 255, 0.35);
+  color: var(--neon-purple);
+  padding: 0.25rem 0.65rem;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-family: var(--font-title);
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.2s ease;
+}
+
+.admin-mod-btn:hover, .admin-mod-btn.active {
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(180, 79, 255, 0.2));
+  border-color: #ff006e;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(255, 0, 110, 0.4);
+}
+
 .chat-title-group {
   display: flex;
   align-items: center;
@@ -1873,6 +1902,35 @@ body {
 .relative-time-ago {
   font-size: 0.72rem;
   color: rgba(160, 160, 192, 0.5);
+}
+
+.msg-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.delete-msg-btn {
+  background: rgba(255, 0, 85, 0.08);
+  border: 1px solid rgba(255, 0, 85, 0.35);
+  color: #ff4d79;
+  border-radius: 8px;
+  padding: 0.18rem 0.55rem;
+  font-size: 0.7rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.delete-msg-btn:hover {
+  background: #ff0055;
+  color: #fff;
+  border-color: #ff0055;
+  box-shadow: 0 0 12px rgba(255, 0, 85, 0.6);
+  transform: scale(1.05);
 }
 
 /* Jump to latest button */
