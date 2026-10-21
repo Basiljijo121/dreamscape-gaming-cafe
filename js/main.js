@@ -186,6 +186,9 @@ window.addEventListener('scroll', () => {
   const STORAGE_KEY = 'dreamscape_chat_messages_real_v3';
   const UPVOTES_KEY = 'dreamscape_chat_upvotes_real_v3';
   const USER_KEY = 'dreamscape_chat_username';
+  const DELETED_KEY = 'dreamscape_deleted_ids_v1';
+  const ADMIN_KEY = 'dreamscape_founder_auth_v1';
+  const FOUNDER_PIN = '1212'; // Default PIN for Basil
 
   const chatMessagesEl = document.getElementById('chatMessages');
   const chatFormEl = document.getElementById('chatForm');
@@ -196,6 +199,8 @@ window.addEventListener('scroll', () => {
   const charCounterEl = document.getElementById('charCounter');
   const jumpLatestBtn = document.getElementById('jumpLatestBtn');
   const flyingReactionsEl = document.getElementById('flyingReactions');
+  const adminModBtn = document.getElementById('adminModBtn');
+  const adminModLabel = document.getElementById('adminModLabel');
   const filterPills = document.querySelectorAll('.stream-pill');
 
   if (!chatMessagesEl || !chatFormEl) return;
@@ -203,7 +208,73 @@ window.addEventListener('scroll', () => {
   let activeFilter = 'All';
   let messages = [];
   let userUpvotes = new Set(JSON.parse(localStorage.getItem(UPVOTES_KEY) || '[]'));
+  let deletedIds = new Set(JSON.parse(localStorage.getItem(DELETED_KEY) || '[]'));
+  let isFounderAdmin = localStorage.getItem(ADMIN_KEY) === 'true';
   let isUserScrolledUp = false;
+
+  function updateAdminButtonUI() {
+    if (!adminModBtn || !adminModLabel) return;
+    if (isFounderAdmin) {
+      adminModBtn.classList.add('active');
+      adminModLabel.textContent = '👑 Mod Active';
+      adminModBtn.title = 'Founder Mode ACTIVE: Click to lock / exit';
+    } else {
+      adminModBtn.classList.remove('active');
+      adminModLabel.textContent = 'Founder Mod';
+      adminModBtn.title = 'Click to unlock message deletion controls (PIN: 1212)';
+    }
+  }
+  updateAdminButtonUI();
+
+  // Toggle Founder Admin mode
+  window.toggleFounderAdmin = function() {
+    if (isFounderAdmin) {
+      const exit = confirm('👑 Founder Mode is currently ACTIVE.\n\nAll delete controls are visible.\nDo you want to lock and exit Founder Mode?');
+      if (exit) {
+        isFounderAdmin = false;
+        localStorage.removeItem(ADMIN_KEY);
+        updateAdminButtonUI();
+        renderMessages();
+      }
+    } else {
+      const entered = prompt('👑 FOUNDER MODERATION ACCESS\n\nEnter Founder PIN to delete unwanted messages:\n(Default PIN is: 1212)');
+      if (entered === FOUNDER_PIN) {
+        isFounderAdmin = true;
+        localStorage.setItem(ADMIN_KEY, 'true');
+        updateAdminButtonUI();
+        renderMessages();
+        alert('✅ Founder Mode Unlocked!\nYou can now delete any unwanted message with the red "Delete" button.');
+      } else if (entered !== null) {
+        alert('❌ Incorrect PIN. Please try again.');
+      }
+    }
+  };
+
+  // Delete message function
+  window.deleteMessage = async function(id) {
+    const msg = messages.find(m => m.id === id);
+    const authorName = msg ? msg.name : 'this user';
+    const confirmDelete = confirm(`🗑️ Delete message from "${authorName}" permanently?`);
+    if (!confirmDelete) return;
+
+    // Remove locally and store in deleted blacklist
+    messages = messages.filter(m => m.id !== id);
+    deletedIds.add(id);
+    localStorage.setItem(DELETED_KEY, JSON.stringify(Array.from(deletedIds)));
+    saveMessagesToStorage();
+    renderMessages();
+
+    // Broadcast delete signal so it vanishes for everyone
+    try {
+      await fetch(CHAT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action: 'delete', id: id })
+      });
+    } catch (e) {
+      console.log('Local delete complete');
+    }
+  };
 
   // Load saved user name
   const savedName = localStorage.getItem(USER_KEY);
@@ -411,7 +482,14 @@ window.addEventListener('scroll', () => {
                 <i class="${isUpvoted ? 'fas' : 'far'} fa-heart"></i>
                 <span>${m.upvotes || 0}</span>
               </button>
-              <span class="relative-time-ago">${relativeTime}</span>
+              <div class="msg-actions-right">
+                <span class="relative-time-ago">${relativeTime}</span>
+                ${(isFounderAdmin || isOwn) ? `
+                  <button type="button" class="delete-msg-btn" onclick="deleteMessage('${m.id}')" title="Delete this message">
+                    <i class="fas fa-trash-alt"></i> Delete
+                  </button>
+                ` : ''}
+              </div>
             </div>
           </div>
         </div>
@@ -447,7 +525,13 @@ window.addEventListener('scroll', () => {
           const item = JSON.parse(line);
           if (item.message) {
             const data = JSON.parse(item.message);
-            if (data && data.text && (!data.id || !String(data.id).startsWith('seed-')) && !messages.some(m => m.id === data.id || (m.name === data.name && m.text === data.text))) {
+            if (data && data.action === 'delete' && data.id) {
+              deletedIds.add(data.id);
+              localStorage.setItem(DELETED_KEY, JSON.stringify(Array.from(deletedIds)));
+              messages = messages.filter(m => m.id !== data.id);
+              continue;
+            }
+            if (data && data.text && !deletedIds.has(data.id) && (!data.id || !String(data.id).startsWith('seed-')) && !messages.some(m => m.id === data.id || (m.name === data.name && m.text === data.text))) {
               messages.push(data);
               addedNew = true;
             }
@@ -475,7 +559,15 @@ window.addEventListener('scroll', () => {
           const data = JSON.parse(event.data);
           if (data && data.message) {
             const parsed = JSON.parse(data.message);
-            if (parsed && parsed.text && (!parsed.id || !String(parsed.id).startsWith('seed-')) && !messages.some(m => m.id === parsed.id)) {
+            if (parsed && parsed.action === 'delete' && parsed.id) {
+              deletedIds.add(parsed.id);
+              localStorage.setItem(DELETED_KEY, JSON.stringify(Array.from(deletedIds)));
+              messages = messages.filter(m => m.id !== parsed.id);
+              saveMessagesToStorage();
+              renderMessages();
+              return;
+            }
+            if (parsed && parsed.text && !deletedIds.has(parsed.id) && (!parsed.id || !String(parsed.id).startsWith('seed-')) && !messages.some(m => m.id === parsed.id)) {
               messages.push(parsed);
               saveMessagesToStorage();
               renderMessages();
